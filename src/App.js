@@ -25,13 +25,15 @@ function multiplicationWithASeriesOf1s() {
   return {
     op1,
     op2,
-    answer: op1 * op2,
-    fromRight: true
+    answer: op1 * op2
   }
 }
 
 function multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTheSame() {
-  const op1 = getRandomNumber(10, 100)
+  let op1
+  do {
+    op1 = getRandomNumber(10, 100)
+  } while (op1 % 10 === 0)
   const base = Math.floor(op1 * 0.1) * 10
   const op2 = base + (10 - (op1 - base))
   return {
@@ -42,20 +44,50 @@ function multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTh
 }
 
 function App() {
+  const [count, setCount] = useState(0)
+  const [operation, setOperation] = useState({})
+
   const categories = [
     squaringOfNumbersBetween50And60,
     multiplicationWithASeriesOf1s,
     multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTheSame
   ]
-  const f = categories[Math.floor(Math.random() * categories.length)]
-  const { op1, op2, answer, fromRight = false } = f()
+
+  useEffect(() => {
+    const f = categories[Math.floor(Math.random() * categories.length)]
+    setOperation(f())
+  }, [count])
+
+  function handleOnCompleted() {
+    setTimeout(() => {
+      setCount(count + 1)
+    }, 1000)
+  }
+
+  const { op1, op2, answer } = operation
+
+  if (op1 === undefined || answer === undefined) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-12">
-          <Multiplication op1={op1} op2={op2} />
-          <UserInput answer={answer} fromRight={fromRight} />
+      <div className="row justify-content-center text-center">
+        <div className="col-auto">
+          <p className="my-3">
+            Solve:
+          </p>
+          <Multiplication 
+            op1={op1} 
+            op2={op2} 
+          />
+          <p className="mt-4 mb-0">
+            Answer:
+          </p>
+          <UserInput 
+            answer={answer} 
+            onCompleted={handleOnCompleted}
+          />
         </div>
       </div>
     </div>

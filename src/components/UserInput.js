@@ -1,27 +1,22 @@
 import { useEffect, useRef, useState } from 'react' 
 
-function UserInput({ answer, fromLeft = true, fromRight = false }) {
+function UserInput({ answer, onCompleted }) {
   const numDigits = String(answer).length
   const [isCorrect, setIsCorrect] = useState(false)
   const [userAnswer, setUserAnswer] = useState(Array(numDigits).fill(''))
   const inputRefs = useRef([])
 
-  if (fromRight) {
-    fromLeft = !fromRight
-  } else if (fromLeft) {
-    fromRight = !fromLeft
-  }
+  useEffect(() => {
+    setIsCorrect(false)
+    setUserAnswer(Array(numDigits).fill(''))
+    inputRefs.current[0].focus()
+  }, [answer])
 
   useEffect(() => {
-    if (fromLeft) {
-      inputRefs.current[0].focus()
-    } else {
-      inputRefs.current[numDigits - 1].focus()
+    if (String(answer) === userAnswer.join('')) {
+      setIsCorrect(true)
+      onCompleted()
     }
-  }, [numDigits, fromLeft])
-
-  useEffect(() => {
-    setIsCorrect(String(answer) === userAnswer.join(''))
   }, [answer, userAnswer])
 
   function handleInputChange(e, index) {
@@ -29,16 +24,14 @@ function UserInput({ answer, fromLeft = true, fromRight = false }) {
     arr[index] = e.target.value.split('').pop()
     setUserAnswer(arr)
 
-    if (fromLeft && index < numDigits) {
+    if (index < numDigits - 1) {
       inputRefs.current[index + 1].focus()
-    } else if (fromRight && index > 0) {
-      inputRefs.current[index - 1].focus()
     }
   }
 
   return (
     <div className="user-input">
-      <div className="inputs mb-3">
+      <div className="inputs">
         {userAnswer.map((value, index) => (
         <input
           ref={el => inputRefs.current[index] = el}
@@ -49,7 +42,7 @@ function UserInput({ answer, fromLeft = true, fromRight = false }) {
         /> 
         ))}
       </div>
-      {isCorrect && <h5>👏 You got it!</h5>}
+      {isCorrect && <p className="mt-2 text-success">You got it!</p>}
     </div>
   )
 }

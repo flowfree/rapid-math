@@ -1,6 +1,6 @@
 .operation {
-  font-size: 50px;
-  line-height: 50px;
+  font-size: 80px;
+  line-height: 60px;
   font-family: 'Noto Sans Math', sans-serif;
 }
 
@@ -12,13 +12,26 @@
   text-align: right;
 }
 
+.operation .operator {
+  font-size: 50px;
+  padding-top: 25px;
+  padding-right: 25px;
+}
+
 .user-input input {
   width: 40px;
   margin: 0 5px;
-  font-size: 40px;
+  font-size: 50px;
   text-align: center;
   border: none;
   border-bottom: #000 1px solid;
+}
+
+.user-input.correct input {
+  color: green;
+}
+.user-input.wrong input {
+  color: red;
 }
 
 .user-input input:focus {
