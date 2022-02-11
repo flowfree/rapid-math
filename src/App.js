@@ -1,25 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import OpMultiplication from "./components/OpMultiplication"
+import Answer from "./components/Answer"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <OpMultiplication op1={73} op2={11} />
+      <Answer value={803} fromRight={true} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
