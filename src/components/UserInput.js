@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react' 
 
-function Answer({ value, fromLeft = true, fromRight = false }) {
-  const numDigits = String(value).length
+function UserInput({ answer, fromLeft = true, fromRight = false }) {
+  const numDigits = String(answer).length
   const [isCorrect, setIsCorrect] = useState(false)
-  const [solution, setSolution] = useState(Array(numDigits).fill(''))
+  const [userAnswer, setUserAnswer] = useState(Array(numDigits).fill(''))
   const inputRefs = useRef([])
 
   if (fromRight) {
@@ -21,13 +21,13 @@ function Answer({ value, fromLeft = true, fromRight = false }) {
   }, [numDigits, fromLeft])
 
   useEffect(() => {
-    setIsCorrect(String(value) === solution.join(''))
-  }, [value, solution])
+    setIsCorrect(String(answer) === userAnswer.join(''))
+  }, [answer, userAnswer])
 
   function handleInputChange(e, index) {
-    const arr = JSON.parse(JSON.stringify(solution))
+    const arr = JSON.parse(JSON.stringify(userAnswer))
     arr[index] = e.target.value.split('').pop()
-    setSolution(arr)
+    setUserAnswer(arr)
 
     if (fromLeft && index < numDigits) {
       inputRefs.current[index + 1].focus()
@@ -37,13 +37,14 @@ function Answer({ value, fromLeft = true, fromRight = false }) {
   }
 
   return (
-    <div className="solution">
+    <div className="user-input">
       <div className="inputs mb-3">
-        {solution.map((value, index) => (
+        {userAnswer.map((value, index) => (
         <input
           ref={el => inputRefs.current[index] = el}
           key={index}
           value={value || ''}
+          className="shadow-none"
           onChange={e => handleInputChange(e, index)}
         /> 
         ))}
@@ -53,4 +54,4 @@ function Answer({ value, fromLeft = true, fromRight = false }) {
   )
 }
 
-export default Answer 
+export default UserInput 

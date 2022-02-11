@@ -12,7 +12,15 @@
   text-align: right;
 }
 
-.solution input {
-  font-size: 30px;
+.user-input input {
+  width: 40px;
+  margin: 0 5px;
+  font-size: 40px;
   text-align: center;
+  border: none;
+  border-bottom: #000 1px solid;
+}
+
+.user-input input:focus {
+  outline: none;
 }
