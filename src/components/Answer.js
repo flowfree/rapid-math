@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react' 
 
 function Answer({ value, fromLeft = true, fromRight = false }) {
-  const numDigits = (new String(value)).length
+  const numDigits = String(value).length
   const [isCorrect, setIsCorrect] = useState(false)
-  const [solution, setSolution] = useState(new Array(numDigits).fill(''))
+  const [solution, setSolution] = useState(Array(numDigits).fill(''))
   const inputRefs = useRef([])
 
   if (fromRight) {
@@ -18,11 +18,11 @@ function Answer({ value, fromLeft = true, fromRight = false }) {
     } else {
       inputRefs.current[numDigits - 1].focus()
     }
-  }, [numDigits])
+  }, [numDigits, fromLeft])
 
   useEffect(() => {
     setIsCorrect(String(value) === solution.join(''))
-  }, [solution])
+  }, [value, solution])
 
   function handleInputChange(e, index) {
     const arr = JSON.parse(JSON.stringify(solution))
@@ -37,8 +37,8 @@ function Answer({ value, fromLeft = true, fromRight = false }) {
   }
 
   return (
-    <div className="solution mt-3">
-      <div className="inputs">
+    <div className="solution">
+      <div className="inputs mb-3">
         {solution.map((value, index) => (
         <input
           ref={el => inputRefs.current[index] = el}
@@ -48,7 +48,7 @@ function Answer({ value, fromLeft = true, fromRight = false }) {
         /> 
         ))}
       </div>
-      {isCorrect && <p>👏 You got it!</p>}
+      {isCorrect && <h5>👏 You got it!</h5>}
     </div>
   )
 }

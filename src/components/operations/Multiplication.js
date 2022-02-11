@@ -1,6 +1,7 @@
-function OpMultiplication({ op1, op2 }) {
+function Multiplication({ op1, op2 }) {
   return (
-    <div className="problem"> <table className="border-bottom">
+    <div className="operation mb-3"> 
+      <table className="border-bottom">
         <tbody>
           <tr>
             <td></td>
@@ -16,4 +17,4 @@ function OpMultiplication({ op1, op2 }) {
   )
 }
 
-export default OpMultiplication
+export default Multiplication

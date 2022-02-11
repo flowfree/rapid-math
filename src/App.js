@@ -1,10 +1,10 @@
-import OpMultiplication from "./components/OpMultiplication"
+import Multiplication from "./components/operations/Multiplication"
 import Answer from "./components/Answer"
 
 function App() {
   return (
     <div>
-      <OpMultiplication op1={73} op2={11} />
+      <Multiplication op1={73} op2={11} />
       <Answer value={803} fromRight={true} />
     </div>
   )

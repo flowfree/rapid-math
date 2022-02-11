@@ -1,14 +1,14 @@
-.problem {
+.operation {
   font-size: 50px;
   line-height: 50px;
   font-family: 'Noto Sans Math', sans-serif;
 }
 
-.problem .border-bottom {
+.operation .border-bottom {
   border-bottom: #000 2px solid !important;
 }
 
-.problem td {
+.operation td {
   text-align: right;
 }
 
