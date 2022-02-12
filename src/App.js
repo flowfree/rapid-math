@@ -2,12 +2,8 @@ import { useState, useEffect } from 'react'
 import Multiplication from "./components/operations/Multiplication"
 import UserInput from "./components/UserInput"
 
-function getRandomNumber(start, end) {
-  const numbers = []
-  for (let i = start; i < end; i++) {
-    numbers.push(i)
-  }
-  return numbers[Math.floor(Math.random() * numbers.length)]
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min
 }
 
 function squaringOfNumbersBetween50And60() {
@@ -20,7 +16,7 @@ function squaringOfNumbersBetween50And60() {
 }
 
 function multiplicationWithASeriesOf1s() {
-  const op1 = getRandomNumber(10, 100)
+  const op1 = getRandomNumber(10, 1000)
   const op2 = 11
   return {
     op1,
