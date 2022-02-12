@@ -8,7 +8,11 @@ function UserInput({ answer, onCompleted }) {
 
   useEffect(() => {
     setIsCorrect(false)
-    setUserAnswer(Array(numDigits).fill(''))
+    const arr = []
+    String(answer).split('').forEach((val, idx) => {
+      arr[idx] = val === '.' ? val : ''
+    }) 
+    setUserAnswer(arr)
     inputRefs.current[0].focus()
   }, [answer])
 
@@ -25,18 +29,22 @@ function UserInput({ answer, onCompleted }) {
     setUserAnswer(arr)
 
     if (userAnswer[index + 1] === '') {
-      inputRefs.current[index + 1].focus()
+      cursorToNextInput(index)
+    } else if (userAnswer[index + 1] === '.') {
+      cursorToNextInput(index+1)
     } else if (userAnswer[index - 1] === '') {
-      inputRefs.current[index - 1].focus()
+      cursorToPreviousInput(index)
+    } else if (userAnswer[index - 1] === '.') {
+      cursorToPreviousInput(index - 1)
     }
   }
 
   function handleKeyDown(e, index) {
     const rightMostIndex = numDigits - 1
-    if (e.key === 'ArrowLeft' && index > 0) {
-      inputRefs.current[index - 1].focus()
-    } else if (e.key === 'ArrowRight' && index < rightMostIndex) {
-      inputRefs.current[index + 1].focus()
+    if (e.key === 'ArrowLeft') {
+      cursorToPreviousInput(index)
+    } else if (e.key === 'ArrowRight') {
+      cursorToNextInput(index)
     } else if (e.key === 'Backspace') {
       e.preventDefault()
       const arr = JSON.parse(JSON.stringify(userAnswer))
@@ -46,28 +54,51 @@ function UserInput({ answer, onCompleted }) {
         arr[index - 1] = ''
       }
       setUserAnswer(arr)
-      if (index > 0) {
-        inputRefs.current[index - 1].focus()
-      }
+      cursorToPreviousInput(index)
     } else if (e.key === 'Escape') {
       setUserAnswer(Array(numDigits).fill(''))
-      inputRefs.current[0].focus()
+      cursorToPreviousInput(1)
     }
+  }
+
+  function cursorToPreviousInput(index) {
+    while (index > 0) {
+      index--
+      if (inputRefs.current[index].disabled === false) {
+        inputRefs.current[index].focus()
+        break
+      }
+    }
+  }
+
+  function cursorToNextInput(index) {
+    const rightMostIndex = numDigits - 1
+    while (index < rightMostIndex) {
+      index++
+      if (inputRefs.current[index].disabled === false) {
+        inputRefs.current[index].focus()
+        break
+      }
+    } 
   }
 
   return (
     <div className="user-input">
       <div className="inputs">
-        {userAnswer.map((value, index) => (
-        <input
-          ref={el => inputRefs.current[index] = el}
-          key={index}
-          value={value || ''}
-          className="shadow-none"
-          onChange={e => handleInputChange(e, index)}
-          onKeyDown={e => handleKeyDown(e, index)}
-        /> 
-        ))}
+        {userAnswer.map((value, index) => {
+          const isDot = String(answer).indexOf('.') === index
+          return (
+            <input
+              ref={el => inputRefs.current[index] = el}
+              key={index}
+              value={isDot ? "." : (value || '')}
+              disabled={isDot}
+              className="shadow-none"
+              onChange={e => handleInputChange(e, index)}
+              onKeyDown={e => handleKeyDown(e, index)}
+            /> 
+          )
+        })}
       </div>
       {isCorrect && <p className="mt-2 text-success">You got it!</p>}
     </div>

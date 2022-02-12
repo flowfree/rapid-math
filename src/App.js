@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Multiplication from "./components/operations/Multiplication"
+import Substraction from './components/operations/Substraction'
 import UserInput from "./components/UserInput"
 
 function getRandomNumber(min, max) {
@@ -11,7 +12,7 @@ function squaringOfNumbersBetween50And60() {
   return {
     op1: op,
     op2: op,
-    answer: op * op
+    operator: '*'
   }
 }
 
@@ -21,7 +22,7 @@ function multiplicationWithASeriesOf1s() {
   return {
     op1,
     op2,
-    answer: op1 * op2
+    operator: '*'
   }
 }
 
@@ -35,7 +36,17 @@ function multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTh
   return {
     op1,
     op2,
-    answer: op1 * op2
+    operator: '*'
+  }
+}
+
+function substractionFromPowerOf10() {
+  const op1 = 10000.00
+  const op2 = 723.21
+  return {
+    op1,
+    op2,
+    operator: '-'
   }
 }
 
@@ -44,9 +55,10 @@ function App() {
   const [operation, setOperation] = useState({})
 
   const categories = [
-    squaringOfNumbersBetween50And60,
-    multiplicationWithASeriesOf1s,
-    multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTheSame
+    // squaringOfNumbersBetween50And60,
+    // multiplicationWithASeriesOf1s,
+    // multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTheSame,
+    substractionFromPowerOf10
   ]
 
   useEffect(() => {
@@ -60,11 +72,19 @@ function App() {
     }, 1000)
   }
 
-  const { op1, op2, answer } = operation
-
-  if (op1 === undefined || answer === undefined) {
-    return <div>Loading...</div>
+  const { op1, op2, operator } = operation
+  let answer
+  let opDisplay
+  if (op1 === undefined || operator === undefined) {
+    opDisplay = <div>Loading...</div>
+  } else if (operator === '*') {
+    opDisplay = (<Multiplication op1={op1} op2={op2} />)
+    answer = op1 * op2
+  } else if (operator === '-') {
+    opDisplay = (<Substraction op1={op1} op2={op2} />)
+    answer = op1 - op2
   }
+
 
   return (
     <div className="container">
@@ -73,17 +93,18 @@ function App() {
           <p className="my-3">
             Solve:
           </p>
-          <Multiplication 
-            op1={op1} 
-            op2={op2} 
-          />
-          <p className="mt-4 mb-2">
-            Answer:
-          </p>
-          <UserInput 
-            answer={answer} 
-            onCompleted={handleOnCompleted}
-          />
+          {opDisplay}
+          {answer && (
+            <div>
+              <p className="mt-4 mb-2">
+                Answer:
+              </p>
+              <UserInput 
+                answer={answer} 
+                onCompleted={handleOnCompleted}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

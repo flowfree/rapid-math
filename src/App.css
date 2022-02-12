@@ -28,6 +28,12 @@
   border-bottom: #000 1px solid;
 }
 
+.user-input input[disabled] {
+  font-size: 50px;
+  margin: 0 10px;
+  background: none;
+}
+
 .user-input.correct input {
   color: green;
 }
