@@ -48,11 +48,7 @@ function UserInput({ answer, onCompleted }) {
     } else if (e.key === 'Backspace') {
       e.preventDefault()
       const arr = JSON.parse(JSON.stringify(userAnswer))
-      if (index === 0) {
-        arr[0] = ''
-      } else {
-        arr[index - 1] = ''
-      }
+      arr[index] = ''
       setUserAnswer(arr)
       cursorToPreviousInput(index)
     } else if (e.key === 'Escape') {
