@@ -4,7 +4,11 @@ import Substraction from './components/operations/Substraction'
 import UserInput from "./components/UserInput"
 
 function getRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min
+  if (min === undefined && max === undefined) {
+    return Math.random()
+  } else {
+    return Math.floor(Math.random() * (max - min)) + min
+  }
 }
 
 function squaringOfNumbersBetween50And60() {
@@ -41,8 +45,9 @@ function multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTh
 }
 
 function substractionFromPowerOf10() {
-  const op1 = 10000.00
-  const op2 = 723.21
+  const powerOfTen = [100, 1000, 10000]
+  const op1 = powerOfTen[Math.floor(Math.random() * powerOfTen.length)]
+  const op2 = getRandomNumber(10, op1) + parseFloat(getRandomNumber().toFixed(2))
   return {
     op1,
     op2,
@@ -82,7 +87,7 @@ function App() {
     answer = op1 * op2
   } else if (operator === '-') {
     opDisplay = (<Substraction op1={op1} op2={op2} />)
-    answer = op1 - op2
+    answer = String(op2).indexOf('.') === -1 ? (op1 - op2) : (op1 - op2).toFixed(2)
   }
 
 
