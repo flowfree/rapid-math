@@ -81,7 +81,7 @@ function App() {
             op1={op1} 
             op2={op2} 
           />
-          <p className="mt-4 mb-0">
+          <p className="mt-4 mb-2">
             Answer:
           </p>
           <UserInput 

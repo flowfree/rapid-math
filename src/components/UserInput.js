@@ -24,7 +24,24 @@ function UserInput({ answer, onCompleted }) {
     arr[index] = e.target.value.split('').pop()
     setUserAnswer(arr)
 
-    if (index < numDigits - 1) {
+    const rightMostIndex = numDigits - 1
+    if (userAnswer[index + 1] === '') {
+      inputRefs.current[index + 1].focus()
+    } else if (userAnswer[index - 1] === '') {
+      inputRefs.current[index - 1].focus()
+    }
+
+
+    // if (index < numDigits - 1) {
+    //   inputRefs.current[index + 1].focus()
+    // }
+  }
+
+  function handleArrowKeys(e, index) {
+    const rightMostIndex = numDigits - 1
+    if (e.key === 'ArrowLeft' && index > 0) {
+      inputRefs.current[index - 1].focus()
+    } else if (e.key === 'ArrowRight' && index < rightMostIndex) {
       inputRefs.current[index + 1].focus()
     }
   }
@@ -39,6 +56,7 @@ function UserInput({ answer, onCompleted }) {
           value={value || ''}
           className="shadow-none"
           onChange={e => handleInputChange(e, index)}
+          onKeyDown={e => handleArrowKeys(e, index)}
         /> 
         ))}
       </div>
