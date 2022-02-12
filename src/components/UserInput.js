@@ -40,7 +40,11 @@ function UserInput({ answer, onCompleted }) {
     } else if (e.key === 'Backspace') {
       e.preventDefault()
       const arr = JSON.parse(JSON.stringify(userAnswer))
-      arr[index - 1] = ''
+      if (index === 0) {
+        arr[0] = ''
+      } else {
+        arr[index - 1] = ''
+      }
       setUserAnswer(arr)
       if (index > 0) {
         inputRefs.current[index - 1].focus()

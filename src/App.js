@@ -17,7 +17,7 @@ function squaringOfNumbersBetween50And60() {
 
 function multiplicationWithASeriesOf1s() {
   const op1 = getRandomNumber(10, 1000)
-  const op2 = 11
+  const op2 = getRandomNumber(2, 4) === 2 ? 11 : 111
   return {
     op1,
     op2,
