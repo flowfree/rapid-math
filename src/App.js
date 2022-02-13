@@ -60,16 +60,16 @@ function App() {
   const [operation, setOperation] = useState({})
 
   const categories = [
-    // squaringOfNumbersBetween50And60,
-    // multiplicationWithASeriesOf1s,
-    // multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTheSame,
+    squaringOfNumbersBetween50And60,
+    multiplicationWithASeriesOf1s,
+    multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTheSame,
     substractionFromPowerOf10
   ]
 
   useEffect(() => {
     const f = categories[Math.floor(Math.random() * categories.length)]
     setOperation(f())
-  }, [count])
+  }, [count, categories])
 
   function handleOnCompleted() {
     setTimeout(() => {
@@ -87,7 +87,12 @@ function App() {
     answer = op1 * op2
   } else if (operator === '-') {
     opDisplay = (<Substraction op1={op1} op2={op2} />)
-    answer = String(op2).indexOf('.') === -1 ? (op1 - op2) : (op1 - op2).toFixed(2)
+    try {
+      const numDecimals = String(op2).split('.')[1].length
+      answer = (op1 - op2).toFixed(numDecimals)
+    } catch(e) {
+      answer = op1 - op2
+    }
   }
 
 
