@@ -48,9 +48,12 @@ function UserInput({ answer, onCompleted }) {
     } else if (e.key === 'Backspace') {
       e.preventDefault()
       const arr = JSON.parse(JSON.stringify(userAnswer))
-      arr[index] = ''
-      setUserAnswer(arr)
-      cursorToPreviousInput(index)
+      if (arr[index] !== '') {
+        arr[index] = ''
+        setUserAnswer(arr)
+      } else {
+        cursorToPreviousInput(index)
+      }
     } else if (e.key === 'Escape') {
       setUserAnswer(Array(numDigits).fill(''))
       cursorToPreviousInput(1)
