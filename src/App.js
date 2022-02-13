@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import Multiplication from "./components/operations/Multiplication"
-import Substraction from './components/operations/Substraction'
+import Multiplication from "./components/Multiplication"
+import Substraction from './components/Substraction'
 import UserInput from "./components/UserInput"
 
 function getRandomNumber(min, max) {
@@ -69,7 +69,7 @@ function App() {
   useEffect(() => {
     const f = categories[Math.floor(Math.random() * categories.length)]
     setOperation(f())
-  }, [count, categories])
+  }, [count])
 
   function handleOnCompleted() {
     setTimeout(() => {
