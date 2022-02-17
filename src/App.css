@@ -1,46 +1,38 @@
-.operation {
-  font-size: 80px;
-  line-height: 60px;
+body {
   font-family: 'Noto Sans Math', sans-serif;
 }
 
-.operation .border-bottom {
-  border-bottom: #000 2px solid !important;
-}
-
-.operation td {
-  text-align: right;
-}
-
-.operation .operator {
-  font-size: 50px;
-  padding-top: 25px;
-  padding-right: 25px;
-}
-
-.user-input input {
-  width: 40px;
-  margin: 0 5px;
-  font-size: 50px;
-  line-height: 65px;
+.rapid-math {
+  margin-top: 130px;
   text-align: center;
-  border: none;
-  border-bottom: #000 1px solid;
 }
 
-.user-input input[disabled] {
-  font-size: 50px;
-  margin: 0 10px;
-  background: none;
+.rapid-math .badge {
+  font-size: 18px;
 }
 
-.user-input.correct input {
+.rapid-math .operation {
+  font-size: 110px;
+  line-height: 1.2em;
+}
+
+.rapid-math input {
+  font-size: 70px;
+  line-height: 1.1em;
+  height: 120px;
+  text-align: center;
+  width: 90px;
+  padding: 10px;
+  border: lightblue 1px solid;
+  border-radius: 5px;
+}
+
+.rapid-math input.correct {
   color: green;
 }
-.user-input.wrong input {
-  color: red;
-}
 
-.user-input input:focus {
-  outline: none;
+.rapid-math input.dot {
+  border: none;
+  width: 40px;
+  background-color: white;
 }

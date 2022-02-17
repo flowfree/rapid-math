@@ -76,7 +76,7 @@ function App() {
       setCount(count + 1)
     }, 1000)
   }
-
+  
   const { op1, op2, operator } = operation
   let answer
   let opDisplay
@@ -95,29 +95,19 @@ function App() {
     }
   }
 
-
   return (
     <div className="container">
-      <div className="row justify-content-center text-center">
-        <div className="col-auto">
-          <p className="my-3">
-            Solve:
-          </p>
-          {opDisplay}
-          {answer && (
-            <div>
-              <p className="mt-4 mb-2">
-                Answer:
-              </p>
-              <UserInput 
-                answer={answer} 
-                onCompleted={handleOnCompleted}
-              />
-            </div>
-          )}
+      <div className="rapid-math">
+        <div className="row">
+          <div className="col-12">
+            <span className="badge bg-primary">Solve the operation below</span>
+            {opDisplay}
+            {answer && <UserInput answer={answer} onCompleted={handleOnCompleted} />}
+          </div>
         </div>
       </div>
     </div>
+
   )
 }
 

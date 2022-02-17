@@ -82,8 +82,8 @@ function UserInput({ answer, onCompleted }) {
   }
 
   return (
-    <div className="user-input">
-      <div className="inputs">
+    <div className="row">
+      <div className="col-12">
         {userAnswer.map((value, index) => {
           const isDot = String(answer).indexOf('.') === index
           return (
@@ -92,14 +92,14 @@ function UserInput({ answer, onCompleted }) {
               key={index}
               value={isDot ? "." : (value || '')}
               disabled={isDot}
-              className="shadow-none"
+              className={"me-2 " + (isCorrect ? 'correct ' : '') + (isDot ? 'dot ' : '')}
+              maxLength="1"
               onChange={e => handleInputChange(e, index)}
               onKeyDown={e => handleKeyDown(e, index)}
             /> 
           )
         })}
       </div>
-      {isCorrect && <p className="mt-2 text-success">You got it!</p>}
     </div>
   )
 }
