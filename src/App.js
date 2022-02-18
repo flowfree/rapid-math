@@ -44,6 +44,18 @@ function multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTh
   }
 }
 
+function multiplicationOfArbitraryNumbers() {
+  const ops = []
+  for (let i = 0; i < 2; i++) {
+    ops.push(getRandomNumber(10, 50))
+  }
+  return {
+    op1: ops[0],
+    op2: ops[1],
+    operator: '*'
+  }
+}
+
 function substractionFromPowerOf10() {
   const powerOfTen = [100, 1000, 10000]
   const op1 = powerOfTen[Math.floor(Math.random() * powerOfTen.length)]
@@ -63,6 +75,7 @@ function App() {
     squaringOfNumbersBetween50And60,
     multiplicationWithASeriesOf1s,
     multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTheSame,
+    multiplicationOfArbitraryNumbers,
     substractionFromPowerOf10
   ]
 
