@@ -55,7 +55,11 @@ function UserInput({ answer, onCompleted }) {
         cursorToPreviousInput(index)
       }
     } else if (e.key === 'Escape') {
-      setUserAnswer(Array(numDigits).fill(''))
+      const arr = []
+      String(answer).split('').forEach((val, idx) => {
+        arr[idx] = val === '.' ? val : ''
+      }) 
+      setUserAnswer(arr)
       cursorToPreviousInput(1)
     }
   }

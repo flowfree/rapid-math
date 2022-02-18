@@ -33,7 +33,7 @@ function multiplicationWithASeriesOf1s() {
 function multiplicationOfNumbersWhoseLastDigitsAddTo10AndTheRemainingDigitsAreTheSame() {
   let op1
   do {
-    op1 = getRandomNumber(10, 100)
+    op1 = getRandomNumber(10, 101)
   } while (op1 % 10 === 0)
   const base = Math.floor(op1 * 0.1) * 10
   const op2 = base + (10 - (op1 - base))
@@ -80,6 +80,7 @@ function App() {
   const { op1, op2, operator } = operation
   let answer
   let opDisplay
+
   if (op1 === undefined || operator === undefined) {
     opDisplay = <div>Loading...</div>
   } else if (operator === '*') {
