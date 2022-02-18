@@ -1,3 +1,3 @@
-Vedic Math
+Rapid Math
 ==========
-React application to practice fast calculation.
+React application for practicing fast calculation.
