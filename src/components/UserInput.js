@@ -24,8 +24,12 @@ function UserInput({ answer, onCompleted }) {
   }, [answer, userAnswer])
 
   function handleInputChange(e, index) {
+    const val = e.target.value.split('').pop()
+    if (isNaN(val)) {
+      return
+    }
     const arr = JSON.parse(JSON.stringify(userAnswer))
-    arr[index] = e.target.value.split('').pop()
+    arr[index] = val
     setUserAnswer(arr)
 
     if (userAnswer[index + 1] === '') {

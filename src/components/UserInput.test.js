@@ -77,4 +77,17 @@ describe('UserInput', () => {
     expect(textboxes[3]).toHaveValue('')
     expect(textboxes[4]).toHaveValue('')
   })
+
+  test('Only allow numeric chars', () => {
+    const { getAllByRole } = render(<UserInput answer={12345} />)
+    const textboxes = getAllByRole('textbox')
+
+    userEvent.keyboard('abcde')
+
+    expect(textboxes[0]).toHaveValue('')
+    expect(textboxes[1]).toHaveValue('')
+    expect(textboxes[2]).toHaveValue('')
+    expect(textboxes[3]).toHaveValue('')
+    expect(textboxes[4]).toHaveValue('')
+  })
 })
