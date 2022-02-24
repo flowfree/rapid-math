@@ -1,14 +1,19 @@
-import { useEffect, useRef, useState } from 'react' 
+import React, { useEffect, useRef, useState } from 'react' 
 
-function UserInput({ answer, onCompleted }) {
+interface UserInputProps {
+  answer: string
+  onCompleted(): void
+}
+
+function UserInput({ answer, onCompleted }: UserInputProps) {
   const numDigits = String(answer).length
   const [isCorrect, setIsCorrect] = useState(false)
   const [userAnswer, setUserAnswer] = useState(Array(numDigits).fill(''))
-  const inputRefs = useRef([])
+  const inputRefs = useRef<HTMLInputElement[]>([])
 
   useEffect(() => {
     setIsCorrect(false)
-    const arr = []
+    const arr: string[] = []
     String(answer).split('').forEach((val, idx) => {
       arr[idx] = val === '.' ? val : ''
     }) 
@@ -23,13 +28,14 @@ function UserInput({ answer, onCompleted }) {
     }
   }, [answer, userAnswer])
 
-  function handleInputChange(e, index) {
-    const val = e.target.value.split('').pop()
-    if (isNaN(val)) {
+  function handleInputChange(e: React.FormEvent, index: number) {
+    const input = e.target as HTMLInputElement
+    const value = input.value.split('').pop()
+    if (value !== undefined && isNaN(Number(value))) {
       return
     }
     const arr = JSON.parse(JSON.stringify(userAnswer))
-    arr[index] = val
+    arr[index] = value
     setUserAnswer(arr)
 
     if (userAnswer[index + 1] === '') {
@@ -43,7 +49,7 @@ function UserInput({ answer, onCompleted }) {
     }
   }
 
-  function handleKeyDown(e, index) {
+  function handleKeyDown(e: React.KeyboardEvent, index: number) {
     const rightMostIndex = numDigits - 1
     if (e.key === 'ArrowLeft') {
       cursorToPreviousInput(index)
@@ -59,7 +65,7 @@ function UserInput({ answer, onCompleted }) {
         cursorToPreviousInput(index)
       }
     } else if (e.key === 'Escape') {
-      const arr = []
+      const arr: string[] = []
       String(answer).split('').forEach((val, idx) => {
         arr[idx] = val === '.' ? val : ''
       }) 
@@ -68,7 +74,7 @@ function UserInput({ answer, onCompleted }) {
     }
   }
 
-  function cursorToPreviousInput(index) {
+  function cursorToPreviousInput(index: number) {
     while (index > 0) {
       index--
       if (inputRefs.current[index].disabled === false) {
@@ -78,7 +84,7 @@ function UserInput({ answer, onCompleted }) {
     }
   }
 
-  function cursorToNextInput(index) {
+  function cursorToNextInput(index: number) {
     const rightMostIndex = numDigits - 1
     while (index < rightMostIndex) {
       index++
@@ -96,12 +102,12 @@ function UserInput({ answer, onCompleted }) {
           const isDot = String(answer).indexOf('.') === index
           return (
             <input
-              ref={el => inputRefs.current[index] = el}
+              ref={el => inputRefs.current[index] = el as HTMLInputElement}
               key={index}
               value={isDot ? "." : (value || '')}
               disabled={isDot}
               className={"me-2 " + (isCorrect ? 'correct ' : '') + (isDot ? 'dot ' : '')}
-              maxLength="1"
+              maxLength={1}
               onChange={e => handleInputChange(e, index)}
               onKeyDown={e => handleKeyDown(e, index)}
             /> 

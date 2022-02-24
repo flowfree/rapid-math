@@ -1,4 +1,9 @@
-function Multiplication({ op1, op2 }) {
+interface Props {
+  op1: number
+  op2: number
+}
+
+function Multiplication({ op1, op2 }: Props) {
   return (
     <div className="row operation">
       <div className="col-12">

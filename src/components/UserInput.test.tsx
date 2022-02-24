@@ -3,17 +3,21 @@ import userEvent from '@testing-library/user-event'
 import UserInput from './UserInput'
 
 describe('UserInput', () => {
+  let fn: jest.Mock<any, any>
+
+  beforeEach(() => {
+    fn = jest.fn()
+  })
+
   test('renders text fields', () => {
-    const { getAllByRole } = render(<UserInput answer={12345} />)
+    const { getAllByRole } = render(<UserInput answer='12345' onCompleted={fn} />)
 
     const textboxes = getAllByRole('textbox')
     expect(textboxes.length).toEqual(5)
   })
 
   test('fires callback on correct answer', () => {
-    const fn = jest.fn()
-
-    const { getAllByRole } = render(<UserInput answer={12345} onCompleted={fn} />)
+    const { getAllByRole } = render(<UserInput answer='12345' onCompleted={fn} />)
     const textboxes = getAllByRole('textbox')
 
     expect(fn.mock.calls.length).toEqual(0)
@@ -24,7 +28,7 @@ describe('UserInput', () => {
   })
 
   test('moves cursor with arrow keys', () => {
-    const { getAllByRole } = render(<UserInput answer={12345} />)
+    const { getAllByRole } = render(<UserInput answer='12345' onCompleted={fn} />)
     const textboxes = getAllByRole('textbox')
 
     userEvent.keyboard('{arrowright}54')
@@ -37,7 +41,7 @@ describe('UserInput', () => {
   })
 
   test('Enable deletion with backspace', () => {
-    const { getAllByRole } = render(<UserInput answer={12345} />)
+    const { getAllByRole } = render(<UserInput answer='12345' onCompleted={fn} />)
     const textboxes = getAllByRole('textbox')
 
     userEvent.keyboard('1234')
@@ -58,7 +62,7 @@ describe('UserInput', () => {
   })
 
   test('Enable reset with ESC key', () => {
-    const { getAllByRole } = render(<UserInput answer={12345} />)
+    const { getAllByRole } = render(<UserInput answer='12345' onCompleted={fn} />)
     const textboxes = getAllByRole('textbox')
 
     userEvent.keyboard('1234')
@@ -79,7 +83,7 @@ describe('UserInput', () => {
   })
 
   test('Only allow numeric chars', () => {
-    const { getAllByRole } = render(<UserInput answer={12345} />)
+    const { getAllByRole } = render(<UserInput answer='12345' onCompleted={fn} />)
     const textboxes = getAllByRole('textbox')
 
     userEvent.keyboard('abcde')
